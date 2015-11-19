@@ -1,0 +1,18 @@
+name := "SparkLevelUp"
+
+version := "1.0"
+
+scalaVersion := "2.10.6"
+
+libraryDependencies += "org.apache.spark" %% "spark-core" % "1.5.0"
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.5.0"
+
+// This statement includes the assembly plug-in capabilities
+
+// Configure JAR used with the assembly plug-in
+jarName in assembly := "SparkLevelUp.jar"
+
+// A special option to exclude Scala itself from our assembly JAR, since Spark
+// already bundles Scala.
+assemblyOption in assembly :=
+  (assemblyOption in assembly).value.copy(includeScala = false)
