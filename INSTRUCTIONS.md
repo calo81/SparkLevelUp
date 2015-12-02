@@ -49,7 +49,7 @@ Still in node1 as root, in SparkLevelUp root directory:
 
 * ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class GroupingJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
 * Remember you can see your running Job here: `http://node1:8080/`
-* 
+* Now let's get a dataframe `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class df.DataFrameItJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
 #### Analysing the data
 * Now go to [here](https://github.com/calo81/SparkLevelUp#first-in-scala)
 
