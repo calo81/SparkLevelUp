@@ -5,6 +5,7 @@
 * vagrant up 
 * In your local machine add to hosts the line `10.211.55.101 node1`
 * vagrant ssh node1
+* `sudo su -`
 * yum install git
 * `git clone https://github.com/calo81/SparkLevelUp.git`
 * cd SparkLevelUp
