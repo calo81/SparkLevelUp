@@ -9,7 +9,6 @@ libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.5.0"
 libraryDependencies += "org.apache.spark" %% "spark-mllib" % "1.5.0"
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.13"
 libraryDependencies += "org.scalanlp" % "breeze_2.10" % "0.11.2"
-libraryDependencies += "com.github.aztek" % "porterstemmer" % "0.0.1"
 
 resolvers += Resolver.mavenLocal
 
