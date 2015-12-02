@@ -7,6 +7,6 @@
 * cd SparkLevelUp
 * sbt compile
 * sbt assembly
-* Edit `/usr/local/spark/hadoop/etc/hadoop/slaves` adding a single line with the content `node2`
-* `/usr/local/spark/hadoop/sbin/stop-dfs.sh`
-* * `/usr/local/spark/hadoop/sbin/start-dfs.sh`
+* Edit `/usr/local/hadoop/etc/hadoop/slaves` adding a single line with the content `node2`
+* `/usr/local/hadoop/sbin/stop-dfs.sh`
+* * `/usr/local/hadoop/sbin/start-dfs.sh`
