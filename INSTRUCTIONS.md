@@ -66,7 +66,7 @@ type Trifecta = Tuple3[Seq[String], Seq[String], Seq[String]]
 
  // print the movies
 
- horrorMoviesWithCertainActor.foreach((tuple: (String, Trifecta)) => println(tuple._1))
+ horrorMoviesWithCertainActor.collect
 
 
  val allGenresAnActorHasBeenIn = grouped.filter(_._2._2.contains("Nicholson, Jack (I)")).flatMap(_._2._1).distinct
