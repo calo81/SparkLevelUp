@@ -19,6 +19,7 @@ All tasks in the nodes will be run as ROOT
 * ssh into node2 and execute `/usr/local/spark/sbin/start-slave.sh spark://node1:7077`
 * ssh into node1 and Execute example job `$SPARK_HOME/bin/spark-submit --class org.apache.spark.examples.SparkPi --master spark://node1:7077 $SPARK_HOME/lib/spark-examples*.jar`
 * Visit node1 URL `http://10.211.55.101:8080/` and see the job running
+* Stop the previously running process with `Ctrl-c` if it takes a while to finish.
 * You also can see your cluster's HDFS here `http://node1:50070/dfshealth.html#tab-overview`
 * `curl -O https://bootstrap.pypa.io/get-pip.py`
 * Now from `node1` `python get-pip.py`
