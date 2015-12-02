@@ -75,6 +75,27 @@ type Trifecta = Tuple3[Seq[String], Seq[String], Seq[String]]
 
  val moviesForACouple = grouped.filter(_._2._2.contains("Willis, Bruce")).filter(_._2._3.contains("Jovovich, Milla")).filter(_._2._1.contains("Sci-Fi"))
 ```
+#####R for data scientists
 
+*  `/usr/local/spark/bin/sparkR --master spark://node1:7077 --jars /root/SparkLevelUp/lib/hadoop-aws-2.6.0.jar,/root/SparkLevelUp/lib/aws-java-sdk-1.10.34.jar,/root/SparkLevelUp/lib/guava-14.0.1.jar`
+
+```
+Sys.setenv(SPARK_HOME="/usr/local/spark")
+.libPaths(c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib"), .libPaths()))
+
+library(SparkR)
+
+ sc <- sparkR.init(master="spark://node1:7077")
+
+ data <- read.df(path = "hdfs://node1/records_parquet")
+
+ horrorMovies <- filter(data, contains(data$genres, "Horror"))
+
+ horrorMoviesWithCertainActor <- filter(horrorMovies, contains(horrorMovies$actors, "Nicholson, Jack"))
+
+ // print the movies
+
+ head(horrorMoviesWithCertainActor[,1], n=13)
+```
 
 
