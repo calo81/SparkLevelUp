@@ -50,7 +50,7 @@ object FindMyMovieInteractive {
 
     val similarity = 0.0
 
-    val vectorForMovie = createVectorForMovie("rebel forces fight empire dark lord jedi")
+    val vectorForMovie = createVectorForMovie("stars war light force jedi empire rebels")
 
     records.rdd.map { (row: Row) =>
       val vector = row.getAs[linalg.Vector]("last_vector").asInstanceOf[linalg.SparseVector]

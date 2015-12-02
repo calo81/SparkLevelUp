@@ -1,5 +1,6 @@
 package ml
 
+import com.github.aztek.porterstemmer.PorterStemmer
 import org.apache.spark.mllib.clustering.LDA
 import org.apache.spark.ml.feature.{IDF, HashingTF}
 import org.apache.spark.{SparkContext, SparkConf}
@@ -24,7 +25,7 @@ object PlotClusterJob {
     val movies = sc.textFile("hdfs://localhost:9000/plots_cleaned")
 
     val plotsWords = movies.map { (movie: String) =>
-      (movie.split(":::")(0), movie.split(":::")(1).split(" ").toList.filter(notStopWord))
+      (movie.split(":::")(0), movie.split(":::")(1).split(" ").toList.filter(notStopWord).map(PorterStemmer.stem(_)))
     }.toDF("movie", "plot")
 
     val tf = new HashingTF("what-goes-here")
