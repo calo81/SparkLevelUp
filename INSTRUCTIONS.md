@@ -45,5 +45,6 @@ Still in node1 as root, in SparkLevelUp root directory:
 
 #### Grouping. Now the following is for the actual level up
 
-
+* ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class GroupingJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* Now go to [here](https://github.com/calo81/SparkLevelUp#first-in-scala)
 
