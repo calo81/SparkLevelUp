@@ -50,8 +50,31 @@ Still in node1 as root, in SparkLevelUp root directory:
 * ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class GroupingJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
 * Remember you can see your running Job here: `http://node1:8080/`
 * Now let's get a dataframe `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class df.DataFrameItJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
-#### Analysing the data
-* Now go to [here](https://github.com/calo81/SparkLevelUp#first-in-scala)
+#### Interactively Analysing the data
+* `/usr/local/spark/bin/spark-shell --master spark://node1:7077 --jars /root/SparkLevelUp/lib/hadoop-aws-2.6.0.jar,/root/SparkLevelUp/lib/aws-java-sdk-1.10.34.jar,/root/SparkLevelUp/lib/guava-14.0.1.jar`
+* Then:
+
+```
+type Trifecta = Tuple3[Seq[String], Seq[String], Seq[String]]
+
+ val grouped = sc.objectFile[(String, Trifecta)]("hdfs://node1/grouped_info")
+
+ val horrorMovies = grouped.filter(_._2._1.contains("Horror"))
+
+
+ val horrorMoviesWithCertainActor = grouped.filter(_._2._1.contains("Horror")).filter(_._2._2.contains("Nicholson, Jack (I)"))
+
+ // print the movies
+
+ horrorMoviesWithCertainActor.foreach((tuple: (String, Trifecta)) => println(tuple._1))
+
+
+ val allGenresAnActorHasBeenIn = grouped.filter(_._2._2.contains("Nicholson, Jack (I)")).flatMap(_._2._1).distinct
+
+ allGenresAnActorHasBeenIn.foreach((genre: String) => println(genre))
+
+ val moviesForACouple = grouped.filter(_._2._2.contains("Willis, Bruce")).filter(_._2._3.contains("Jovovich, Milla")).filter(_._2._1.contains("Sci-Fi"))
+```
 
 
 
