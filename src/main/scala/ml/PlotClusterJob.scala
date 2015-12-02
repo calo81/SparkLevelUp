@@ -17,7 +17,7 @@ object PlotClusterJob {
   }
 
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local[6]")
+    val conf = new SparkConf().setAppName("Spark Movie Grouper")
     val sc = new SparkContext(conf)
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
     import sqlContext.implicits._

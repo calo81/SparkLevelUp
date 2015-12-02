@@ -7,7 +7,7 @@ import org.apache.spark.{SparkContext, SparkConf}
   */
 object DataFrameItJob {
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf().setAppName("Spark Movie Dataframer").setMaster("local")
+    val conf = new SparkConf().setAppName("Spark Movie Dataframer")
     val sc = new SparkContext(conf)
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
     import sqlContext.implicits._

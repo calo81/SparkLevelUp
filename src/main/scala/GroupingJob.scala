@@ -6,7 +6,7 @@ import org.apache.hadoop.conf.Configuration
 
 object GroupingJob {
   def main(args: Array[String]) {
-    val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local")
+    val conf = new SparkConf().setAppName("Spark Movie Grouper")
     val sc = new SparkContext(conf)
     val actresses = sc.textFile("hdfs://node1/actresses_cleaned")
     val actors = sc.textFile("hdfs://node1/actors_cleaned")

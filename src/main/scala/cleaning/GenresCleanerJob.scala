@@ -7,7 +7,7 @@ import org.apache.spark.{SparkContext, SparkConf}
   */
 object GenresCleanerJob {
   def main(args: Array[String]): Unit = {
-    val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local")
+    val conf = new SparkConf().setAppName("Spark Movie Grouper")
     val sc = new SparkContext(conf)
     val movies = sc.textFile("hdfs://node1/genres.list")
     movies.map { (movie: String) =>

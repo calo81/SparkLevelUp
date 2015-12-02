@@ -12,7 +12,7 @@ object ActressCleanerJob {
 
   def main(args: Array[String]) {
     val hadoopConf = new Configuration
-    val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local")
+    val conf = new SparkConf().setAppName("Spark Movie Grouper")
     val sc = new SparkContext(conf)
 
     hadoopConf.set("textinputformat.record.delimiter", "\n\n")

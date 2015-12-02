@@ -12,7 +12,7 @@ object RecommenderJob {
 
   def main(args: Array[String]): Unit = {
 
-    val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local[6]")
+    val conf = new SparkConf().setAppName("Spark Movie Grouper")
     val sc = new SparkContext(conf)
     // Load and parse the data
     val data = sc.textFile("hdfs://node1/ratings.csv")

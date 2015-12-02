@@ -11,7 +11,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object PlotCleanerJob {
   def main(args: Array[String]): Unit = {
     val hadoopConf = new Configuration
-    val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local")
+    val conf = new SparkConf().setAppName("Spark Movie Grouper")
 
     val sc = new SparkContext(conf)
 

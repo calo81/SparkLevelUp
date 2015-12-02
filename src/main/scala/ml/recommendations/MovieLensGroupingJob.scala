@@ -7,7 +7,7 @@ import org.apache.spark.{SparkContext, SparkConf}
   */
 object MovieLensGroupingJob {
   def main(args: Array[String]) {
-    val conf = new SparkConf().setAppName("Spark Movie Lens Grouper").setMaster("local")
+    val conf = new SparkConf().setAppName("Spark Movie Lens Grouper")
     val sc = new SparkContext(conf)
     val movies = sc.textFile("hdfs://node1/movies.csv")
     val ratings = sc.textFile("hdfs://node1/ratings.csv")
