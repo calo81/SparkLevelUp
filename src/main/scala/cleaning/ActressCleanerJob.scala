@@ -8,7 +8,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
   * Created by cscarion on 19/11/2015.
   */
-object ActorCleanerJob {
+object ActressCleanerJob {
 
   def main(args: Array[String]) {
     val hadoopConf = new Configuration
@@ -16,7 +16,7 @@ object ActorCleanerJob {
     val sc = new SparkContext(conf)
 
     hadoopConf.set("textinputformat.record.delimiter", "\n\n")
-    val cleaned = sc.newAPIHadoopFile("s3n://sb-level-ups/spark/actors.list", classOf[TextInputFormat], classOf[LongWritable], classOf[Text], hadoopConf)
+    val cleaned = sc.newAPIHadoopFile("s3n://sb-level-ups/spark/actresses.list", classOf[TextInputFormat], classOf[LongWritable], classOf[Text], hadoopConf)
     cleaned.map { tuple: (LongWritable, Text) =>
       val singleLine = tuple._2.toString.replace("\n\t\t\t", ";;")
       val keyValue = singleLine.toString.split("\t+")
@@ -24,10 +24,10 @@ object ActorCleanerJob {
         val movies = keyValue(1).split(";;").map { (movie: String) =>
           movie.substring(0, movie.indexOf('('))
         }.mkString(";;")
-       s"${keyValue(0)}:::${movies}"
+        s"${keyValue(0)}:::${movies}"
       }else{
-       "no_actor"
+        "no_actor"
       }
-    }.filter(!_.contains("no_actor")).coalesce(1).saveAsTextFile("s3n://sb-level-ups/spark/actors_cleaned")
+    }.filter(!_.contains("no_actor")).coalesce(1).saveAsTextFile("s3n://sb-level-ups/spark/actresses_cleaned")
   }
 }
