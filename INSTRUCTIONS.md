@@ -6,3 +6,4 @@
 * `git clone https://github.com/calo81/SparkLevelUp.git`
 * cd SparkLevelUp
 * sbt compile
+* sbt assembly
