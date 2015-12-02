@@ -14,7 +14,7 @@ object DataFrameItJob {
 
     type Trifecta = Tuple3[Seq[String], Seq[String], Seq[String]]
 
-    val grouped = sc.objectFile[(String, Trifecta)]("s3n://sb-level-ups/spark/grouped_info")
+    val grouped = sc.objectFile[(String, Trifecta)]("hdfs://node1:9000/grouped_info")
 
     val records = grouped.map((tuple: (String, Trifecta)) => Record(tuple._1, tuple._2._1.mkString(";;"), tuple._2._2.mkString(";;"), tuple._2._3.mkString(";;"))).toDF
 
@@ -22,7 +22,7 @@ object DataFrameItJob {
 
     records.printSchema()
 
-    records.write.parquet("s3n://sb-level-ups/spark/records_parquet")
+    records.write.parquet("hdfs://node1:9000/records_parquet")
 
   }
 }

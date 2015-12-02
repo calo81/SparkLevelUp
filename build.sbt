@@ -9,8 +9,6 @@ libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.5.2"
 libraryDependencies += "org.apache.spark" %% "spark-mllib" % "1.5.2"
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.13"
 libraryDependencies += "org.scalanlp" % "breeze_2.10" % "0.11.2"
-libraryDependencies += "org.apache.hadoop" % "hadoop-aws" % "2.6.0"
-libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.10.34"
 
 
 resolvers += Resolver.mavenLocal

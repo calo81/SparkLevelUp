@@ -8,9 +8,9 @@ object GroupingJob {
   def main(args: Array[String]) {
     val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local")
     val sc = new SparkContext(conf)
-    val actresses = sc.textFile("s3n://sb-level-ups/spark/actresses_cleaned")
-    val actors = sc.textFile("s3n://sb-level-ups/spark/actors_cleaned")
-    val genres = sc.textFile("s3n://sb-level-ups/spark/genres_cleaned")
+    val actresses = sc.textFile("hdfs://node1:9000/actresses_cleaned")
+    val actors = sc.textFile("hdfs://node1:9000/actors_cleaned")
+    val genres = sc.textFile("hdfs://node1:9000/genres_cleaned")
 
     val keyedGenres = genres.map { (movieGenre: String) =>
       val splitted = movieGenre.split(":::")
@@ -43,6 +43,6 @@ object GroupingJob {
       }
     }
 
-    keyedGenres.cogroup(keyedActors, keyedActresses).coalesce(1).saveAsObjectFile("s3n://sb-level-ups/spark/grouped_info")
+    keyedGenres.cogroup(keyedActors, keyedActresses).coalesce(1).saveAsObjectFile("hdfs://node1:9000/grouped_info")
   }
 }

@@ -92,13 +92,13 @@ You can visit the master URL at `http://master-ip:8080/`, there you will have li
 
 
 ```
-$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put actors.list s3n://sb-level-ups/spark/actors.list
-$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put actresses.list s3n://sb-level-ups/spark/actresses.list
-$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put genres.list s3n://sb-level-ups/spark/genres.list
-$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put movies.list s3n://sb-level-ups/spark/movies.list
-$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put plot.list s3n://sb-level-ups/spark/plot.list
-$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put movies.csv s3n://sb-level-ups/spark/movies.csv
-$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put ratings.csv s3n://sb-level-ups/spark/ratings.csv
+$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put actors.list hdfs://node1:9000/actors.list
+$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put actresses.list hdfs://node1:9000/actresses.list
+$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put genres.list hdfs://node1:9000/genres.list
+$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put movies.list hdfs://node1:9000/movies.list
+$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put plot.list hdfs://node1:9000/plot.list
+$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put movies.csv hdfs://node1:9000/movies.csv
+$ ~/Programs/hadoop-2.6.0/bin/hdfs dfs -put ratings.csv hdfs://node1:9000/ratings.csv
 
 ```
 
@@ -148,7 +148,7 @@ The first thing we want to do is to group some of them so that we have just 1 re
 ```
  type Trifecta = Tuple3[Seq[String], Seq[String], Seq[String]]
 
- val grouped = sc.objectFile[(String, Trifecta)]("s3n://sb-level-ups/spark/grouped_info")
+ val grouped = sc.objectFile[(String, Trifecta)]("hdfs://node1:9000/grouped_info")
 
  val horrorMovies = grouped.filter(_._2._1.contains("Horror"))
  
@@ -185,7 +185,7 @@ Sys.setenv(SPARK_HOME="/Users/cscarion/Programs/spark-1.5.0")
  
  sc <- sparkR.init(master="local")
  
- data <- read.df(path = "s3n://sb-level-ups/spark/records_parquet")
+ data <- read.df(path = "hdfs://node1:9000/records_parquet")
  
  horrorMovies <- filter(data, contains(data$genres, "Horror"))
  
@@ -206,7 +206,7 @@ When we created the Parquet file to use in R, we also created a Spark Dataframe.
 val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 import sqlContext.implicits._
 
-val records = sqlContext.read.parquet("s3n://sb-level-ups/spark/records_parquet")
+val records = sqlContext.read.parquet("hdfs://node1:9000/records_parquet")
 records.registerTempTable("records")
 
 val horrorMoviesWithJack = sqlContext.sql("SELECT name from records where genres like '%Horror%' and actors like '%Nicholson, Jack%'")
@@ -240,19 +240,19 @@ Open Spark-shell with `~/Programs/spark-1.5.0/bin/spark-shell --master local[6] 
         val newRatings = sc.parallelize(List(Rating(0, 79132, 5), Rating(0, 130219, 5), Rating(0, 91529, 5), Rating(0, 48780, 5), Rating(0, 33794, 5), Rating(0, 1889, 5), Rating(0, 4226, 5)))
 
 
-    val dataAgain = sc.textFile("s3n://sb-level-ups/spark/ratings.csv")
+    val dataAgain = sc.textFile("hdfs://node1:9000/ratings.csv")
     val ratingsAgain = dataAgain.filter(!_.startsWith("u")).map { (line: String) =>
       val splitted = line.split(",")
       Rating(splitted(0).toInt, splitted(1).toInt, splitted(2).toDouble)
     }
 
-    ALS.train(ratingsAgain.union(newRatings), 10, 10, 0.01).save(sc, "s3n://sb-level-ups/spark/newRecommendationModel")
+    ALS.train(ratingsAgain.union(newRatings), 10, 10, 0.01).save(sc, "hdfs://node1:9000/newRecommendationModel")
 
-    val loadedModel = MatrixFactorizationModel.load(sc, "s3n://sb-level-ups/spark/newRecommendationModel")
+    val loadedModel = MatrixFactorizationModel.load(sc, "hdfs://node1:9000/newRecommendationModel")
 
     val recommendations = sc.parallelize(loadedModel.recommendProducts(0, 5))
 
-    val movies = sc.textFile("s3n://sb-level-ups/spark/movies.csv")
+    val movies = sc.textFile("hdfs://node1:9000/movies.csv")
 
     val keyedMovies = movies.filter(!_.startsWith("mov")).map { (line: String) =>
       val splitted = line.split(",")
