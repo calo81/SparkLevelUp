@@ -5,6 +5,7 @@
 * vagrant up 
 * In your local machine add to hosts the line `10.211.55.101 node1`
 * vagrant ssh node1
+* `sudo su -`
 * yum install git
 * `git clone https://github.com/calo81/SparkLevelUp.git`
 * cd SparkLevelUp
@@ -28,3 +29,22 @@
 * `/usr/local/hadoop/bin/hdfs dfs -put plots.list hdfs://node1/plots.list`
 * `/usr/local/hadoop/bin/hdfs dfs -put movies.csv hdfs://node1/movies.csv`
 * `/usr/local/hadoop/bin/hdfs dfs -put ratings.csv hdfs://node1/ratings.csv`
+* 
+
+###Running the actual jobs
+
+####Clean the data
+
+Still in node1 as root, in SparkLevelUp root directory:
+
+* ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.MovieCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.PlotCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.ActorCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.ActressCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.GenresCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+
+#### Grouping. Now the following is for the actual level up
+
+* ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class GroupingJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* Now go to [here](https://github.com/calo81/SparkLevelUp#first-in-scala)
+
