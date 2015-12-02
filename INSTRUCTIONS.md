@@ -21,4 +21,10 @@
 * `pip install awscli`
 * `aws configure` and set your AWS credentials
 * `aws s3 cp --recursive s3://sb-level-ups/spark .`
-* 
+* `/usr/local/hadoop/bin/hdfs dfs -put actors.list hdfs://node1/actors.list`
+* `/usr/local/hadoop/bin/hdfs dfs -put actresses.list hdfs://node1/actresses.list`
+* `/usr/local/hadoop/bin/hdfs dfs -put genres.list hdfs://node1/genres.list`
+* `/usr/local/hadoop/bin/hdfs dfs -put movies.list hdfs://node1/movies.list`
+* `/usr/local/hadoop/bin/hdfs dfs -put plots.list hdfs://node1/plots.list`
+* `/usr/local/hadoop/bin/hdfs dfs -put movies.csv hdfs://node1/movies.csv`
+* `/usr/local/hadoop/bin/hdfs dfs -put ratings.csv hdfs://node1/ratings.csv`
