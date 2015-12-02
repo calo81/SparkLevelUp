@@ -16,7 +16,7 @@ object PlotCleanerJob {
     val sc = new SparkContext(conf)
 
     hadoopConf.set("textinputformat.record.delimiter", "-------------------------------------------------------------------------------")
-    val cleaned = sc.newAPIHadoopFile("hdfs://node1:9000/plot.list", classOf[TextInputFormat], classOf[LongWritable], classOf[Text], hadoopConf)
+    val cleaned = sc.newAPIHadoopFile("hdfs://node1/plot.list", classOf[TextInputFormat], classOf[LongWritable], classOf[Text], hadoopConf)
 
     val keyedMovies = cleaned.map { (tuple: (LongWritable, Text)) =>
       val singleLine = tuple._2.toString.replace("\n", " ")
@@ -25,6 +25,6 @@ object PlotCleanerJob {
       val review = singleLine.substring(singleLine.indexOf("PL:"), singleLine.size - 1).replace("PL:", "").toLowerCase
       s"${key}:::${review}"
     }
-    keyedMovies.coalesce(1).saveAsTextFile("hdfs://node1:9000/plots_cleaned")
+    keyedMovies.coalesce(1).saveAsTextFile("hdfs://node1/plots_cleaned")
   }
 }

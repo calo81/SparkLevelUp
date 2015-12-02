@@ -15,7 +15,7 @@ object RecommenderJob {
     val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local[6]")
     val sc = new SparkContext(conf)
     // Load and parse the data
-    val data = sc.textFile("hdfs://node1:9000/ratings.csv")
+    val data = sc.textFile("hdfs://node1/ratings.csv")
     val ratings = data.filter(!_.startsWith("u")).map { (line: String) =>
       val splitted = line.split(",")
       Rating(splitted(0).toInt, splitted(1).toInt, splitted(2).toDouble)
@@ -25,7 +25,7 @@ object RecommenderJob {
     val rank = 10
     val numIterations = 10
     val model = ALS.train(ratings, rank, numIterations, 0.01)
-    model.save(sc, "hdfs://node1:9000/recommendationModel")
+    model.save(sc, "hdfs://node1/recommendationModel")
 
 
 
@@ -41,19 +41,19 @@ object RecommenderJob {
     val newRatings = sc.parallelize(List(Rating(0, 79132, 5), Rating(0, 130219, 5), Rating(0, 91529, 5), Rating(0, 48780, 5), Rating(0, 33794, 5), Rating(0, 1889, 5), Rating(0, 4226, 5)))
 
 
-    val dataAgain = sc.textFile("hdfs://node1:9000/ratings.csv")
+    val dataAgain = sc.textFile("hdfs://node1/ratings.csv")
     val ratingsAgain = dataAgain.filter(!_.startsWith("u")).map { (line: String) =>
       val splitted = line.split(",")
       Rating(splitted(0).toInt, splitted(1).toInt, splitted(2).toDouble)
     }
 
-    ALS.train(ratingsAgain.union(newRatings), 10, 10, 0.01).save(sc, "hdfs://node1:9000/newRecommendationModel")
+    ALS.train(ratingsAgain.union(newRatings), 10, 10, 0.01).save(sc, "hdfs://node1/newRecommendationModel")
 
-    val loadedModel = MatrixFactorizationModel.load(sc, "hdfs://node1:9000/newRecommendationModel")
+    val loadedModel = MatrixFactorizationModel.load(sc, "hdfs://node1/newRecommendationModel")
 
     val recommendations = sc.parallelize(loadedModel.recommendProducts(0, 5))
 
-    val movies = sc.textFile("hdfs://node1:9000/movies.csv")
+    val movies = sc.textFile("hdfs://node1/movies.csv")
 
     val keyedMovies = movies.filter(!_.startsWith("mov")).map { (line: String) =>
       val splitted = line.split(",")

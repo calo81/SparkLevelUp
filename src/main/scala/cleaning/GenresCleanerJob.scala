@@ -9,7 +9,7 @@ object GenresCleanerJob {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local")
     val sc = new SparkContext(conf)
-    val movies = sc.textFile("hdfs://node1:9000/genres.list")
+    val movies = sc.textFile("hdfs://node1/genres.list")
     movies.map { (movie: String) =>
       val movieGenre = movie.split("\t+")
       var movieName = movieGenre(0)
@@ -19,6 +19,6 @@ object GenresCleanerJob {
         movieName
       }
       s"${movieName}:::${movieGenre(1)}"
-    }.coalesce(1).saveAsTextFile("hdfs://node1:9000/genres_cleaned")
+    }.coalesce(1).saveAsTextFile("hdfs://node1/genres_cleaned")
   }
 }

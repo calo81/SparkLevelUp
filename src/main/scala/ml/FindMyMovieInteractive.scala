@@ -46,7 +46,7 @@ object FindMyMovieInteractive {
 
   def main(args: Array[String]): Unit = {
 
-    val records = sqlContext.read.parquet("hdfs://node1:9000/vectorized_terms")
+    val records = sqlContext.read.parquet("hdfs://node1/vectorized_terms")
 
     val similarity = 0.0
 

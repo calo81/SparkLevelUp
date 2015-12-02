@@ -13,13 +13,13 @@ object MovieCleanerJob {
   def main(args: Array[String]) {
     val conf = new SparkConf().setAppName("Spark Movie Grouper").setMaster("local")
     val sc = new SparkContext(conf)
-    val movies = sc.textFile("hdfs://node1:9000/movies.list")
+    val movies = sc.textFile("hdfs://node1/movies.list")
     movies.map { (movie: String) =>
       if (movie.contains("(")) {
         movie.substring(0, movie.indexOf('('))
       } else {
         movie
       }
-    }.distinct().coalesce(1).saveAsTextFile("hdfs://node1:9000/movies_cleaned")
+    }.distinct().coalesce(1).saveAsTextFile("hdfs://node1/movies_cleaned")
   }
 }

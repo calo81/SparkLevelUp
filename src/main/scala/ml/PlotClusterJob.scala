@@ -22,7 +22,7 @@ object PlotClusterJob {
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
     import sqlContext.implicits._
 
-    val movies = sc.textFile("hdfs://node1:9000/plots_cleaned")
+    val movies = sc.textFile("hdfs://node1/plots_cleaned")
 
     val plotsWords = movies.map { (movie: String) =>
       (movie.split(":::")(0), movie.split(":::")(1).split(" ").toList.filter(notStopWord).map(PorterStemmer.stem(_)))
@@ -45,7 +45,7 @@ object PlotClusterJob {
 
     val tfIdfVectors = idfModel.transform(tfVectors)
 
-    tfIdfVectors.coalesce(1).write.parquet("hdfs://node1:9000/vectorized_terms")
+    tfIdfVectors.coalesce(1).write.parquet("hdfs://node1/vectorized_terms")
 
 
   }
