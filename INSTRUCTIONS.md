@@ -1,3 +1,4 @@
+* `brew cask install vagrant`
 * `git clone https://github.com/calo81/Spark-on-Vagrant.git`
 * `git checkout hadoop-2.6.0-spark-1.5.2`
 * cd Spark-on-Vagrant
