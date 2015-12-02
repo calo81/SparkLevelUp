@@ -51,6 +51,9 @@ Still in node1 as root, in SparkLevelUp root directory:
 * ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class GroupingJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
 * Remember you can see your running Job here: `http://node1:8080/`
 * Now let's get a dataframe `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class df.DataFrameItJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+
+
+
 #### Interactively Analysing the data
 * `/usr/local/spark/bin/spark-shell --master spark://node1:7077 --jars /root/SparkLevelUp/lib/hadoop-aws-2.6.0.jar,/root/SparkLevelUp/lib/aws-java-sdk-1.10.34.jar,/root/SparkLevelUp/lib/guava-14.0.1.jar`
 * Then:
