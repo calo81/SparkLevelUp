@@ -123,7 +123,12 @@ horrorMoviesWithJack.show
 
 #### Some machine learning
 
-Recommend movies by similar ratings.
+#####TF-IDF for plot recommendation
+
+* `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class ml.PlotClusterJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class ml.FindMyMovieInteractive /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+
+#####Recommend movies by similar ratings.
 
 *`/usr/local/spark/bin/spark-shell --master spark://node1:7077 --jars /root/SparkLevelUp/lib/hadoop-aws-2.6.0.jar,/root/SparkLevelUp/lib/aws-java-sdk-1.10.34.jar,/root/SparkLevelUp/lib/guava-14.0.1.jar`
 
@@ -164,9 +169,6 @@ import org.apache.spark.{SparkContext, SparkConf}
   }
 ```
 
-#####TF-IDF for plot recommendation
 
-* `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class ml.PlotClusterJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
-* `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class ml.FindMyMovieInteractive /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
 
 
