@@ -17,3 +17,8 @@
 * ssh into node1 and Execute example job `$SPARK_HOME/bin/spark-submit --class org.apache.spark.examples.SparkPi --master spark://node1:7077 $SPARK_HOME/lib/spark-examples*.jar`
 * Visit node1 URL `http://10.211.55.101:8080/` and see the job running
 * You also can see your cluster's HDFS here `http://node1:50070/dfshealth.html#tab-overview`
+* Now from `node1` `python get-pip.py`
+* `pip install awscli`
+* `aws configure` and set your AWS credentials
+* `aws s3 cp --recursive s3://sb-level-ups/spark .`
+* 
