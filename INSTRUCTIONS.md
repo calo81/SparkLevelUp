@@ -9,4 +9,5 @@
 * sbt assembly
 * Edit `/usr/local/hadoop/etc/hadoop/slaves` adding a single line with the content `node2`
 * `/usr/local/hadoop/sbin/stop-dfs.sh`
-* * `/usr/local/hadoop/sbin/start-dfs.sh`
+* `/usr/local/hadoop/sbin/start-dfs.sh`
+* ssh into node2 and execute `/usr/local/spark/sbin/start-slave spark://node1:7077`
