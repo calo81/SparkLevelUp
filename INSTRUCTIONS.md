@@ -43,7 +43,7 @@ Still in node1 as root, in SparkLevelUp root directory:
 * ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.PlotCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
 * ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.ActorCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
 * ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.ActressCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
-* ` /usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.GenresCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class cleaning.GenresCleanerJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
 
 #### Grouping. Processing the data.
 
@@ -158,4 +158,10 @@ import org.apache.spark.{SparkContext, SparkConf}
 
   }
 ```
+
+#####TF-IDF for plot recommendation
+
+* `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class ml.PlotClusterJob /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+* `/usr/local/spark/bin/spark-submit --master spark://node1:7077 --class ml.FindMyMovieInteractive /root/SparkLevelUp/target/scala-2.10/SparkLevelUp.jar`
+
 
