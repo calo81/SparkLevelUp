@@ -16,7 +16,7 @@ object ActorCleanerJob {
     val sc = new SparkContext(conf)
 
     hadoopConf.set("textinputformat.record.delimiter", "\n\n")
-    val cleaned = sc.newAPIHadoopFile("hdfs://localhost:9000/actresses.list", classOf[TextInputFormat], classOf[LongWritable], classOf[Text], hadoopConf)
+    val cleaned = sc.newAPIHadoopFile("s3n://sb-level-ups/spark/actresses.list", classOf[TextInputFormat], classOf[LongWritable], classOf[Text], hadoopConf)
     cleaned.map { tuple: (LongWritable, Text) =>
       val singleLine = tuple._2.toString.replace("\n\t\t\t", ";;")
       val keyValue = singleLine.toString.split("\t+")
@@ -28,6 +28,6 @@ object ActorCleanerJob {
       }else{
        "no_actor"
       }
-    }.filter(!_.contains("no_actor")).coalesce(1).saveAsTextFile("hdfs://localhost:9000/actresses_cleaned")
+    }.filter(!_.contains("no_actor")).coalesce(1).saveAsTextFile("s3n://sb-level-ups/spark/actresses_cleaned")
   }
 }

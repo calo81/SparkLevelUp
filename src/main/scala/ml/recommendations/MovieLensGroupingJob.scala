@@ -9,8 +9,8 @@ object MovieLensGroupingJob {
   def main(args: Array[String]) {
     val conf = new SparkConf().setAppName("Spark Movie Lens Grouper").setMaster("local")
     val sc = new SparkContext(conf)
-    val movies = sc.textFile("hdfs://localhost:9000/movies.csv")
-    val ratings = sc.textFile("hdfs://localhost:9000/ratings.csv")
+    val movies = sc.textFile("s3n://sb-level-ups/spark/movies.csv")
+    val ratings = sc.textFile("s3n://sb-level-ups/spark/ratings.csv")
 
     val keyedMovies = movies.map { (line: String) =>
       val splitted = line.split(",")
@@ -33,6 +33,6 @@ object MovieLensGroupingJob {
       s"${tuple._2._1},${tuple._2._2._1},${tuple._2._2._2}"
     }
 
-    triple.coalesce(1).saveAsTextFile("hdfs://localhost:9000/groupedRatings.csv")
+    triple.coalesce(1).saveAsTextFile("s3n://sb-level-ups/spark/groupedRatings.csv")
   }
 }
