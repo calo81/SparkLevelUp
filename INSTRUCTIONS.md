@@ -98,4 +98,21 @@ library(SparkR)
  head(horrorMoviesWithCertainActor[,1], n=13)
 ```
 
+#####Also some SQL
+*`/usr/local/spark/bin/spark-shell --master spark://node1:7077 --jars /root/SparkLevelUp/lib/hadoop-aws-2.6.0.jar,/root/SparkLevelUp/lib/aws-java-sdk-1.10.34.jar,/root/SparkLevelUp/lib/guava-14.0.1.jar`
+
+
+```
+val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+import sqlContext.implicits._
+
+val records = sqlContext.read.parquet("hdfs://node1/records_parquet")
+records.registerTempTable("records")
+
+val horrorMoviesWithJack = sqlContext.sql("SELECT name from records where genres like '%Horror%' and actors like '%Nicholson, Jack%'")
+
+//Show the movies
+
+horrorMoviesWithJack.show
+```
 
