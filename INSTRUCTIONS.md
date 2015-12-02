@@ -1,6 +1,8 @@
 * `git clone https://github.com/calo81/Spark-on-Vagrant.git`
+* `git checkout hadoop-2.6.0-spark-1.5.2`
 * cd Spark-on-Vagrant
 * vagrant up 
+* In your local machine add to hosts the line `10.211.55.101 node1`
 * vagrant ssh node1
 * yum install git
 * `git clone https://github.com/calo81/SparkLevelUp.git`
