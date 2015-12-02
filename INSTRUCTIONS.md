@@ -116,3 +116,46 @@ val horrorMoviesWithJack = sqlContext.sql("SELECT name from records where genres
 horrorMoviesWithJack.show
 ```
 
+#### Some machine learning
+
+Recommend movies by similar ratings.
+
+*`/usr/local/spark/bin/spark-shell --master spark://node1:7077 --jars /root/SparkLevelUp/lib/hadoop-aws-2.6.0.jar,/root/SparkLevelUp/lib/aws-java-sdk-1.10.34.jar,/root/SparkLevelUp/lib/guava-14.0.1.jar`
+
+```
+import org.apache.spark.{SparkContext, SparkConf}
+    import org.apache.spark.mllib.recommendation.ALS
+    import org.apache.spark.mllib.recommendation.MatrixFactorizationModel
+    import org.apache.spark.mllib.recommendation.Rating
+
+    // Christopher Nolan
+
+        val newRatings = sc.parallelize(List(Rating(0, 79132, 5), Rating(0, 130219, 5), Rating(0, 91529, 5), Rating(0, 48780, 5), Rating(0, 33794, 5), Rating(0, 1889, 5), Rating(0, 4226, 5)))
+
+
+    val dataAgain = sc.textFile("hdfs://node1/ratings.csv")
+    val ratingsAgain = dataAgain.filter(!_.startsWith("u")).map { (line: String) =>
+      val splitted = line.split(",")
+      Rating(splitted(0).toInt, splitted(1).toInt, splitted(2).toDouble)
+    }
+
+    ALS.train(ratingsAgain.union(newRatings), 10, 10, 0.01).save(sc, "hdfs://node1/newRecommendationModel")
+
+    val loadedModel = MatrixFactorizationModel.load(sc, "hdfs://node1/newRecommendationModel")
+
+    val recommendations = sc.parallelize(loadedModel.recommendProducts(0, 5))
+
+    val movies = sc.textFile("hdfs://node1/movies.csv")
+
+    val keyedMovies = movies.filter(!_.startsWith("mov")).map { (line: String) =>
+      val splitted = line.split(",")
+      (splitted(0).toInt, splitted(1))
+    }
+
+    recommendations.map { (r: Rating) =>
+      (r.product, r.rating)
+    }.join(keyedMovies).map(_._2).sortByKey(false).map(_._2).collect()
+
+  }
+```
+
